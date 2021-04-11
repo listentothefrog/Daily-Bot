@@ -3,6 +3,7 @@ import os
 import requests
 import json
 import random
+from get_news import *
 
 client = discord.Client()
 
@@ -14,6 +15,8 @@ async def on_ready():
 async def on_message(message):
   if message.author == client.user:
     return
-
-  msg = message.content
+  if message.content.startswith('$daily-news'):
+    news = get_latest_news()
+    await message.channel.send(news)
+  
 client.run(os.getenv('DISCORD_API_KEY'))
